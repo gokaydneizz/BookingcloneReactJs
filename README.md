@@ -1,5 +1,6 @@
 Çalıştırmanız için bilgisayarınızda node'un yüklü olması gerekiyor.Dosyayı indirdikten sonra npm install yazarsanız node modules dosyası inecektir,daha sonra npm start yazarak react uygulamamızı başlatabiliriz!
 
+Kullanılan teknolojiler : Javascript,react.js,HTML,CSS
 
 
 
