@@ -1,3 +1,11 @@
+Çalıştırmanız için bilgisayarınızda node'un yüklü olması gerekiyor.Dosyayı indirdikten sonra npm install yazarsanız node modules dosyası inecektir,daha sonra npm start yazarak react uygulamamızı başlatabiliriz!
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
