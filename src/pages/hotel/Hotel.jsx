@@ -11,17 +11,28 @@ import {
   faCircleXmark,
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {useLocation} from 'react-router-dom';
+import {SearchContext} from '../../context/SearchContext';
 
 const Hotel = () => {
   const location = useLocation();
   const path = location.pathname.split('/')[2];
-  console.log(path);
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
 
   const {data, loading, error} = useFetch(`/hotels/find/${path}`);
+
+  const {dates, options} = useContext(SearchContext);
+
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2?.getTime() - date1?.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
+
+  const days = dayDifference(dates[0]?.endDate, dates[0]?.startDate);
 
   const handleOpen = i => {
     setSlideNumber(i);
@@ -51,32 +62,34 @@ const Hotel = () => {
         <>
           <div className='hotelContainer'>
             {open && (
-              <div className='slider'>
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className='close'
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-                />
-                <FontAwesomeIcon
-                  icon={faCircleArrowLeft}
-                  className='arrow'
-                  onClick={() => handleMove('l')}
-                />
-                <div className='sliderWrapper'>
-                  <img
-                    src={data.photos[slideNumber]}
-                    alt=''
-                    className='sliderImg'
+              <>
+                <div className='slider'>
+                  <FontAwesomeIcon
+                    icon={faCircleXmark}
+                    className='close'
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  />
+                  <FontAwesomeIcon
+                    icon={faCircleArrowLeft}
+                    className='arrow'
+                    onClick={() => handleMove('l')}
+                  />
+                  <div className='sliderWrapper'>
+                    <img
+                      src={data.photos[slideNumber]}
+                      alt=''
+                      className='sliderImg'
+                    />
+                  </div>
+                  <FontAwesomeIcon
+                    icon={faCircleArrowRight}
+                    className='arrow'
+                    onClick={() => handleMove('r')}
                   />
                 </div>
-                <FontAwesomeIcon
-                  icon={faCircleArrowRight}
-                  className='arrow'
-                  onClick={() => handleMove('r')}
-                />
-              </div>
+              </>
             )}
             <div className='hotelWrapper'>
               <button className='bookNow'>Reserve or Book Now!</button>
@@ -110,13 +123,18 @@ const Hotel = () => {
                   <p className='hotelDesc'>{data.desc}</p>
                 </div>
                 <div className='hotelDetailsPrice'>
-                  <h1>Perfect for 9-night stay!</h1>
+                  <h1>Perfect for {days}-night stay!</h1>
                   <span>
                     Located in the real heart of Krakow,this property has an
                     excellent location score of 9.8!
                   </span>
                   <h2>
-                    <b>$945</b> (9 nights)
+                    <b>
+                      {days
+                        ? days * data.cheapestPrice * options.room + '$'
+                        : 'Try to Search Again'}
+                    </b>{' '}
+                    {days ? '(' + days + 'Nights' + ')' : 'Couldnt Calculated'}
                   </h2>
                   <button>Reserve or book now!</button>
                 </div>
