@@ -51,11 +51,13 @@
 .hotelDistance {
   color: #0071c2;
   font-weight: 500;
+  text-align: start;
 }
 
 .hotelPriceHighlight {
   color: #008009;
   font-weight: 500;
+  text-align: start;
 }
 
 .hotelImages {

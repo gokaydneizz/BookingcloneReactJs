@@ -1,6 +1,3 @@
-Context api kullanilarak login page yazildi(register page yazilacak.) ve yine ayni sekil context api ile arama yapip hotellerin fiyatlari gunluk fiyatina gore ve oda sayisina gore hesaplaniyor(kalacaginiz gun sayisi da otomatik olarak sectiginiz date-range'e gore ayarlaniyor.).
-
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
